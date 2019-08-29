@@ -65,21 +65,22 @@ INSERT INTO `role_permission` VALUES ('1', '1', '1');
 INSERT INTO `role_permission` VALUES ('2', '2', '2');
 
 -- ----------------------------
--- Table structure for user
--- ----------------------------
+
 DROP TABLE IF EXISTS `user`;
+
 CREATE TABLE `user` (
   `id` varchar(255) NOT NULL,
   `name` varchar(255) DEFAULT NULL,
-  `password` varchar(255) DEFAULT NULL,
+  `password` varchar(255) NOT NULL,
+  `password_salt` varchar(32) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- ----------------------------
--- Records of user
--- ----------------------------
-INSERT INTO `user` VALUES ('1', 'rhine', '28e5ea71eb6600afb02132dcf27b8e75');
-INSERT INTO `user` VALUES ('2', 'vip', '01ffb6fc48048d105ba5061f8df5a35e');
+/*Data for the table `user` */
+
+insert  into `user`(`id`,`name`,`password`,`password_salt`) values
+('1','poplar','21a088e2bc8e8fddc670131704caae67','pop'),
+('2','vip','21a088e2bc8e8fddc670131704caae67','kk');
 
 -- ----------------------------
 -- Table structure for user_role
