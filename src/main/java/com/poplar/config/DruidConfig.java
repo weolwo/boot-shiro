@@ -1,4 +1,4 @@
-package com.rhine.blog.config;
+package com.poplar.config;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.druid.support.http.StatViewServlet;
@@ -15,7 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @author rhine
+ * @author poplar
  * @description 配置Druid
  */
 @Configuration
@@ -29,7 +29,7 @@ public class DruidConfig {
     }
 
     /**
-     * @author: rhine
+     * @author: poplar
      * @Description: 配置Druid的监控
      **/
     @Bean
@@ -47,7 +47,7 @@ public class DruidConfig {
     }
 
     /**
-     * @author: rhine
+     * @author: poplar
      * @Description: 配置web监控的过滤器
      **/
     @Bean

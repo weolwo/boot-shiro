@@ -1,6 +1,6 @@
-package com.rhine.blog.config;
+package com.poplar.config;
 
-import com.rhine.blog.realm.UserRealm;
+import com.poplar.realm.UserRealm;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
@@ -12,7 +12,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * @author chenyuyu
+ * @author poplar
  * @description Shiro配置类
  * @date Created in 16:07 2018/12/6
  * @modified By:
@@ -26,7 +26,7 @@ public class ShiroConfig {
         //指定加密方式为MD5
         credentialsMatcher.setHashAlgorithmName("MD5");
         //加密次数
-        credentialsMatcher.setHashIterations(1024);
+        credentialsMatcher.setHashIterations(2);
         credentialsMatcher.setStoredCredentialsHexEncoded(true);
         return credentialsMatcher;
     }

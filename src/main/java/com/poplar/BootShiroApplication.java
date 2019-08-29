@@ -1,14 +1,14 @@
-package com.rhine.blog;
+package com.poplar;
 
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-@MapperScan("com.rhine.blog.mapper")
-public class ShirodemoApplication {
+@MapperScan("com.poplar.mapper")
+public class BootShiroApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(ShirodemoApplication.class, args);
+        SpringApplication.run(BootShiroApplication.class, args);
     }
 }

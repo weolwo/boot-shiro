@@ -1,9 +1,9 @@
-package com.rhine.blog.realm;
+package com.poplar.realm;
 
-import com.rhine.blog.po.PermissionBean;
-import com.rhine.blog.po.RoleBean;
-import com.rhine.blog.po.UserBean;
-import com.rhine.blog.service.UserService;
+import com.poplar.po.Role;
+import com.poplar.po.User;
+import com.poplar.service.UserService;
+import com.poplar.po.Permission;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
@@ -32,18 +32,18 @@ public class UserRealm extends AuthorizingRealm {
         System.out.println("执行授权");
 
         Subject subject = SecurityUtils.getSubject();
-        UserBean user = (UserBean)subject.getPrincipal();
-        if(user != null){
+        User user = (User) subject.getPrincipal();
+        if (user != null) {
             SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
             // 角色与权限字符串集合
             Collection<String> rolesCollection = new HashSet<>();
             Collection<String> premissionCollection = new HashSet<>();
 
-            Set<RoleBean> roles = user.getRole();
-            for(RoleBean role : roles){
+            Set<Role> roles = user.getRoles();
+            for (Role role : roles) {
                 rolesCollection.add(role.getName());
-                Set<PermissionBean> permissions = role.getPermissions();
-                for (PermissionBean permission : permissions){
+                Set<Permission> permissions = role.getPermissions();
+                for (Permission permission : permissions) {
                     premissionCollection.add(permission.getUrl());
                 }
                 info.addStringPermissions(premissionCollection);
@@ -62,25 +62,27 @@ public class UserRealm extends AuthorizingRealm {
 
         System.out.println("执行认证");
 
-        UsernamePasswordToken token = (UsernamePasswordToken)authenticationToken;
-        UserBean bean = userService.findByName(token.getUsername());
+        UsernamePasswordToken token = (UsernamePasswordToken) authenticationToken;
+        User bean = userService.findByName(token.getUsername());
 
-        if(bean == null){
+        if (bean == null) {
             throw new UnknownAccountException();
         }
+        if (bean.getPassWordSalt() != null) {
 
-        ByteSource credentialsSalt = ByteSource.Util.bytes(bean.getName());
-
-        return new SimpleAuthenticationInfo(bean, bean.getPassword(),
-                credentialsSalt, getName());
+            ByteSource credentialsSalt = ByteSource.Util.bytes(bean.getPassWordSalt());
+            return new SimpleAuthenticationInfo(bean, bean.getPassWord(),
+                    credentialsSalt, getName());
+        }
+        return null;
     }
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
         String hashAlgorithName = "MD5";
         String password = "123456";
-        //加密次数
-        int hashIterations = 1024;
-        ByteSource credentialsSalt = ByteSource.Util.bytes("vip");
+        //加密迭代次数
+        int hashIterations = 2;
+        ByteSource credentialsSalt = ByteSource.Util.bytes("pop");
         Object obj = new SimpleHash(hashAlgorithName, password, credentialsSalt, hashIterations);
         System.out.println(obj);
     }

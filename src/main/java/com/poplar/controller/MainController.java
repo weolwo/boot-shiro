@@ -1,5 +1,6 @@
-package com.rhine.blog.controller;
+package com.poplar.controller;
 
+import com.poplar.po.User;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
@@ -31,16 +32,16 @@ public class MainController {
     }
 
     @RequestMapping("/login")
-    public String login(HttpServletRequest request, HttpServletResponse response){
+    public String login(HttpServletRequest request, HttpServletResponse response, User user){
         response.setHeader("root", request.getContextPath());
-        String userName = request.getParameter("username");
-        String password = request.getParameter("password");
+        String userName = user.getName();
+        String passWord =user.getPassWord();
 
-        if(!StringUtils.isEmpty(userName)){
+        if(!StringUtils.isEmpty(userName) && !StringUtils.isEmpty(passWord)){
             // 1.获取Subject
             Subject subject = SecurityUtils.getSubject();
             // 2.封装用户数据
-            UsernamePasswordToken token = new UsernamePasswordToken(userName, password);
+            UsernamePasswordToken token = new UsernamePasswordToken(userName, passWord);
             // 3.执行登录方法
             try{
                 subject.login(token);
@@ -50,7 +51,7 @@ public class MainController {
                 request.setAttribute("msg","用户名不存在！");
             } catch (IncorrectCredentialsException e){
                 System.out.println("密码错误！");
-                request.setAttribute("msg","密码错误！");
+                request.setAttribute("msg","用户名或密码错误！");
             }
         }
 
